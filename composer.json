@@ -1,0 +1,36 @@
+{
+  "name": "tentwofour/twig",
+  "type": "library",
+  "description": "Twig extensions",
+  "keywords": [
+    "ten24",
+    "tentwofour",
+    "twig"
+  ],
+  "homepage": "https://github.com/tentwofour/twig",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Blair D. Patterson",
+      "homepage": "http://tentwentyfour.ca",
+      "email": "blair@tentwentyfour.ca"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3"
+  },
+  "require-dev": {
+    "twig/twig": "~1.12"
+  },
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-0": {
+      "Ten24\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
