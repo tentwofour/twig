@@ -17,10 +17,11 @@
     }
   ],
   "require": {
-    "php": ">=5.3.3"
+    "php": ">=5.4",
+    "twig/twig": "~1.23"
   },
   "require-dev": {
-    "twig/twig": "~1.12"
+
   },
   "minimum-stability": "stable",
   "autoload": {
