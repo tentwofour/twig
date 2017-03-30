@@ -3,7 +3,6 @@
 namespace Ten24\Tests\Twig\Extension;
 
 use PHPUnit\Framework\TestCase;
-use Ten24\Twig\Extension\EmailEncodingExtension;
 use Ten24\Twig\Extension\MoneyExtension;
 
 /**

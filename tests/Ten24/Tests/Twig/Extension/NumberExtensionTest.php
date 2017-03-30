@@ -52,7 +52,7 @@ class NumberExtensionTest extends TestCase
         self::assertInternalType('string', $res);
         self::assertEquals('120K', $res);
     }
-    
+
     // thousands (K)
     public function testNumberToHumanReadableWithThousandsIntegerAndDefaultArguments()
     {
@@ -151,7 +151,7 @@ class NumberExtensionTest extends TestCase
         self::assertInternalType('string', $res);
         self::assertEquals('3.15M', $res);
     }
-    
+
     // Decimals >= 1000, < 1000000
     public function testNumberToHumanReadableWithThousandsDecimalAndDefaultArguments()
     {

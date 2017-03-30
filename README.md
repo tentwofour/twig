@@ -104,6 +104,47 @@ $ex->diffHtml($old, $new, 'string');
 {# 'The <ins>stupid</ins>lazy fox was <del>eaten</del><ins>annihilated</ins>by the <del>rabbid rabbit.</del><ins>rabbit rabbit</ins>' #} 
 ```
 
+## InflectorExtension
+
+Provides string inflection functions: 'camelcase_to_capitalized_words', 'camelcase_to_sentence_case_words', and 'camelcase_to_lower_case_words'.
+
+```php
+$ex  = new InflectorExtension();
+$string = 'camelCaseWordWith1Number';
+$ex->camelCaseToCapitalizedWords($string)
+// => 'Camel Case Word With 1 Number'
+$ex->camelCaseToSentenceCasedWords($string)
+// => 'Camel case word with 1 number'
+$ex->camelCaseToLowerCasedWords($string)
+// => 'camel case word with 1 number'
+```
+
+```twig
+{{ 'camelCaseWordWith1Number'|camelcase_to_capitalized_words }}
+{# 'Camel Case Word With 1 Number' #}
+
+{{ 'camelCaseWordWith1Number'|camelcase_to_sentence_case_words}}
+{# 'Camel case word with 1 number' #}
+
+{{ 'camelCaseWordWith1Number'|camelcase_to_lower_case_words }}
+{# 'camel case word with 1 number' #}
+```
+
+## MoneyExtension
+
+Provides a 'cents_to_dollars' filter; which does exactly what it says it does.
+
+```php
+$ex = new MoneyExtension();
+$ex->centsToDollars(1200);
+// => '12.00'
+```
+
+```twig
+{{ 1200|cents_to_dollars }}
+{# '12.00' #}
+```
+
 ## NumberExtension
 
 Provides a 'number_to_human_readable' filter, to round to the closest thousand or million, and add a suffix (K, M).

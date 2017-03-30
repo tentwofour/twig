@@ -27,19 +27,13 @@ class EmailEncodingExtensionTest extends TestCase
         $decrypted = '';
         preg_match_all('/(?:(?:&#[\w\d]+;)|(?:[\w{1}\d{}1\.]))/im', $filtered, $matches);
 
-        foreach ($matches[0] as $match)
-        {
-            if (false !== strpos($match, '&#x'))
-            {
+        foreach ($matches[0] as $match) {
+            if (false !== strpos($match, '&#x')) {
                 $decrypted .= chr(hexdec($match));
                 continue;
-            }
-            elseif(false !== strpos($match, '&#'))
-            {
+            } elseif (false !== strpos($match, '&#')) {
                 $decrypted .= chr(str_replace(['&#', ';'], '', $match));
-            }
-            else
-            {
+            } else {
                 $decrypted .= $match;
             }
         }

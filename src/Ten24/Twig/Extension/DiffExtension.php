@@ -5,9 +5,7 @@ namespace Ten24\Twig\Extension;
 class DiffExtension extends \Twig_Extension
 {
     /**
-     * Return the functions registered as twig extensions
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function getFunctions()
     {
@@ -140,6 +138,9 @@ class DiffExtension extends \Twig_Extension
         return ($output === 'string') ? $ret : $arr;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getName()
     {
         return 'ten24_twig.diff';

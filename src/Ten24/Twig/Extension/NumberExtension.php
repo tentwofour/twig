@@ -5,9 +5,7 @@ namespace Ten24\Twig\Extension;
 class NumberExtension extends \Twig_Extension
 {
     /**
-     * Return the functions registered as twig extensions
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function getFilters()
     {

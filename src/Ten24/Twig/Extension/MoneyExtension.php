@@ -17,8 +17,7 @@ class MoneyExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('centsToDollars', [$this, 'centsToDollars']),
-            new \Twig_SimpleFilter('centsToDollarsLocalized', [$this, 'centsToDollarsLocalized']),
+            new \Twig_SimpleFilter('cents_to_dollars', [$this, 'centsToDollars']),
         ];
     }
 
@@ -28,16 +27,6 @@ class MoneyExtension extends \Twig_Extension
      * @return float
      */
     public function centsToDollars($cents)
-    {
-        return number_format(MoneyFormatter::centsToDollars($cents), 2);
-    }
-
-    /**
-     * @param string|int $cents
-     *
-     * @return string
-     */
-    public function centsToDollarsLocalized($cents)
     {
         return MoneyFormatter::centsToDollars($cents);
     }
