@@ -22,16 +22,16 @@ class DiffExtensionTest extends TestCase
 
     public function testThatDiffWithNonArrayArgumentsAreCastToArray()
     {
-        $res = $this->ex->diff('value', 'value_2');
+        $res = $this->ex->diff('valueA', 'valueB');
 
         $expected = [
             0 =>
                 [
                     'd' => [
-                        0 => 'value',
+                        0 => 'valueA',
                     ],
                     'i' => [
-                        0 => 'value_2',
+                        0 => 'valueB',
                     ],
                 ],
         ];
@@ -138,6 +138,7 @@ class DiffExtensionTest extends TestCase
                 ],
             ],
         ];
+        var_dump($res);
 
         self::assertEquals($expected, $res);
     }

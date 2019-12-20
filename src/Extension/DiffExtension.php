@@ -2,16 +2,21 @@
 
 namespace Ten24\Twig\Extension;
 
-class DiffExtension extends \Twig_Extension
+use RuntimeException;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\ExtensionInterface;
+use Twig\TwigFunction;
+
+class DiffExtension extends AbstractExtension implements ExtensionInterface
 {
     /**
-     * {@inheritDoc}
+     * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('diff', [$this, 'diff']),
-            new \Twig_SimpleFunction('diff_html', [$this, 'diffHtml'], ['is_safe' => ['html']]),
+            new TwigFunction('diff', [$this, 'diff']),
+            new TwigFunction('diff_html', [$this, 'diffHtml'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -46,12 +51,12 @@ class DiffExtension extends \Twig_Extension
      *
      * @see https://github.com/paulgb/simplediff
      *
-     * @param array $old
-     * @param array $new
+     * @param array|string $old
+     * @param array|string $new
      *
      * @return array
      */
-    public function diff($old, $new)
+    public function diff($old, $new): array
     {
         $matrix = [];
         $maxlen = 0;
@@ -62,9 +67,12 @@ class DiffExtension extends \Twig_Extension
 
         foreach ($old as $oindex => $ovalue) {
             $nkeys = array_keys($new, $ovalue);
-            foreach ($nkeys as $nindex) {
+
+            foreach ($nkeys as $nindex => $nvalue) {
+
                 $matrix[$oindex][$nindex] = isset($matrix[$oindex - 1][$nindex - 1]) ?
                     $matrix[$oindex - 1][$nindex - 1] + 1 : 1;
+
                 if ($matrix[$oindex][$nindex] > $maxlen) {
                     $maxlen = $matrix[$oindex][$nindex];
                     $omax   = $oindex + 1 - $maxlen;
@@ -72,6 +80,7 @@ class DiffExtension extends \Twig_Extension
                 }
             }
         }
+
         if ($maxlen == 0) {
             return [['d' => $old, 'i' => $new]];
         }
@@ -98,7 +107,7 @@ class DiffExtension extends \Twig_Extension
     public function diffHtml($old, $new, $output = 'array')
     {
         if (!in_array($output, ['array', 'string'])) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf('Unknown output type "%s"', $output)
             );
         }
@@ -111,20 +120,19 @@ class DiffExtension extends \Twig_Extension
 
         $diff = $this->diff(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
 
-        //die(print_r($diff));
         foreach ($diff as $k) {
             if (is_array($k)) {
                 $deletions  = !empty($k['d']) ? '<del>'.implode(' ', $k['d']).'</del>' : '';
                 $insertions = !empty($k['i']) ? '<ins>'.implode(' ', $k['i']).'</ins>' : '';
                 $deletions  = $deletions.(!empty($deletions) ? ' ' : '');
                 $insertions = $insertions.(!empty($insertions) ? ' ' : '');
-                $ret .= trim($deletions).$insertions;
+                $ret        .= trim($deletions).$insertions;
                 $arr['old'] .= $deletions;
                 $arr['new'] .= $insertions;
             } else {
                 // No differences
-                $str = $k.' ';
-                $ret .= $str;
+                $str        = $k.' ';
+                $ret        .= $str;
                 $arr['old'] .= $str;
                 $arr['new'] .= $str;
             }
@@ -136,13 +144,5 @@ class DiffExtension extends \Twig_Extension
         $arr['new'] = trim(ltrim($arr['new']));
 
         return ($output === 'string') ? $ret : $arr;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return 'ten24_twig.diff';
     }
 }
