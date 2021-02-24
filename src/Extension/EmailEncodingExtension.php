@@ -2,26 +2,34 @@
 
 namespace Ten24\Twig\Extension;
 
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+
 /**
  * Class EmailEncodingExtension
  *
  * @package Ten24\Twig\Extension
  */
-class EmailEncodingExtension extends \Twig_Extension
+class EmailEncodingExtension extends AbstractExtension
 {
     /**
-     * {@inheritDoc}
+     * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
-            'email_encode' => new \Twig_Filter_Method($this, 'filter', [
+            'email_encode' => new TwigFilter('email_encode', [$this, 'filter'], [
                 'is_safe' => ['html'],
             ]),
         ];
     }
 
-    public function filter($text)
+    /**
+     * @param $text
+     *
+     * @return string
+     */
+    public function filter($text): string
     {
         return $this->encodeText($text);
     }
@@ -33,12 +41,12 @@ class EmailEncodingExtension extends \Twig_Extension
      *
      * @return string
      */
-    protected function encodeText($text)
+    protected function encodeText($text): string
     {
         $encoded_text = '';
 
         for ($i = 0; $i < strlen($text); $i++) {
-            $char = $text{$i};
+            $char = $text[$i];
             $r    = rand(0, 100);
 
             # roughly 10% raw, 45% hex, 45% dec
@@ -53,14 +61,5 @@ class EmailEncodingExtension extends \Twig_Extension
         }
 
         return $encoded_text;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'ten24_twig.email_encoding';
     }
 }
