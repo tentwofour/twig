@@ -9,6 +9,7 @@ use Ten24\Twig\Extension\NumberExtension;
  * Class NumberExtensionTest
  *
  * @package Ten24\Tests\Twig\Extension
+ * @todo - tests the 4th argument $trueMega - all tests assume passing the default false (divisor == 1000, rather than 1024)
  */
 class NumberExtensionTest extends TestCase
 {
